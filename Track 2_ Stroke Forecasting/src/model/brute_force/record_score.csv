@@ -1,0 +1,11 @@
+,type,area,overall,,
+0,0,0.268192385,0.268192385,,<- smallest loss since prediction same to ground truth
+1,0,0.551879166,0.551879166,,<- moderate loss for getting ball type correct but wrong area
+2,1000,0.339920551,1000.339921,,<- highest loss for getting the ball type wrong at all (max type loss capped at 1000)
+total,333.33333,0.38666,333.72,,
+,,,,,
+ground truth file are all type - net shot and land at area - front net,,,,,
+"in prediction, we predict rally sequences for 3 different condition",,,,,
+"For 0, we predict type - net shot prob 1.0, area - front net",,,,,
+"For 1, we predict type - net shot prob 1.0, area - non front net",,,,,
+"For 2, we predict type - lob prob 0.5 smash prob 0.5, area - front net",,,,,
