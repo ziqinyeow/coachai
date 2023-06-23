@@ -44,7 +44,7 @@ def Gaussian2D_loss(V_pred, V_trgt):
     return result
 
 
-def shotGen_trainer(data_loader, encoder, decoder, criterion, encoder_optimizer, decoder_optimizer, config, device="cpu"):
+def shotGen_trainer(data_loader, encoder, decoder, criterion, encoder_optimizer, decoder_optimizer, encoder_scheduler, decoder_scheduler, config, device="cpu"):
     encode_length = config['encode_length'] - 1         # use the first 3 strokes to the encoder
     record_loss = {
         'total': [],
@@ -102,6 +102,8 @@ def shotGen_trainer(data_loader, encoder, decoder, criterion, encoder_optimizer,
 
             encoder_optimizer.step()
             decoder_optimizer.step()
+            encoder_scheduler.step()
+            decoder_scheduler.step()
 
             total_loss += loss.item()
             total_shot_loss += loss_shot.item()

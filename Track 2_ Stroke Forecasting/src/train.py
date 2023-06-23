@@ -118,6 +118,10 @@ if __name__ == "__main__":
 
     encoder_optimizer = torch.optim.Adam(encoder.parameters(), lr=config['lr'])
     decoder_optimizer = torch.optim.Adam(decoder.parameters(), lr=config['lr'])
+    milestones = [100, 200, 300, 400, 500]  # Example milestones
+    gamma = 0.1  # Example gamma value
+    encoder_scheduler = torch.optim.lr_scheduler.MultiStepLR(encoder_optimizer, milestones=milestones, gamma=gamma)
+    decoder_scheduler = torch.optim.lr_scheduler.MultiStepLR(decoder_optimizer, milestones=milestones, gamma=gamma)
     encoder.to(device), decoder.to(device)
 
     criterion = {
@@ -127,6 +131,8 @@ if __name__ == "__main__":
     for key, value in criterion.items():
         criterion[key].to(device)
 
-    record_train_loss = shotGen_trainer(data_loader=train_dataloader, encoder=encoder, decoder=decoder, criterion=criterion, encoder_optimizer=encoder_optimizer, decoder_optimizer=decoder_optimizer, config=config, device=device)
+    record_train_loss = shotGen_trainer(data_loader=train_dataloader, encoder=encoder, decoder=decoder, criterion=criterion, 
+                                        encoder_optimizer=encoder_optimizer, decoder_optimizer=decoder_optimizer, 
+                                        encoder_scheduler=encoder_scheduler, decoder_scheduler=decoder_scheduler, config=config, device=device)
 
     draw_loss(record_train_loss, config)
